@@ -1,6 +1,5 @@
 #WATOR - Simulatore Biologico
-##Implementazione a cura di Alessandro Pagiaro
-##Progetto realizzato per il corso di Sistemi Operativi
+Implementazione a cura di Alessandro Pagiaro - Progetto realizzato per il corso di Sistemi Operativi
 
 Per la configurazione settare i parametri del file wator.conf
 sd - Tempo massimo in cui uno squalo sopravvive senza mangiare
