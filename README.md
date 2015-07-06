@@ -8,4 +8,7 @@ sb - Tempo dopo il quale uno squalo si riproduce
 fb - Tempo dopo il quale un pesce si riproduce
 
 ###Installazione
-Per l'installazione basta invocare il comando make install
+Per l'installazione basta invocare il comando 
+'''
+make install
+'''
