@@ -85,17 +85,17 @@ test-three.o: test-three.c wator.h
 
 # make rule per gli altri .o del secondo/terzo frammento (***DA COMPLETARE***)
 visualizer: 
-	gcc $(CFLAGS) visualizer.c -o visualizer -lpthread
+	gcc $(CFLAGS) src/visualizer.c -o visualizer -lpthread
 
 wator:
-	gcc $(CFLAGS) -c wator.c -lpthread
-	gcc $(CFLAGS) -c valutazione_argomenti.c
-	gcc $(CFLAGS) -c worker.c -lpthread
-	gcc $(CFLAGS) -c dispatcher.c -lpthread
-	gcc $(CFLAGS) -c collector.c -lpthread
-	gcc $(CFLAGS) -c gestione_segnali.c -lpthread	
-	gcc $(CFLAGS) -c wator_main_thread.c -lpthread
-	gcc $(CFLAGS) -c wator_thread_funzioni.c -lpthread
+	gcc $(CFLAGS) -c src/wator.c -lpthread
+	gcc $(CFLAGS) -c src/valutazione_argomenti.c
+	gcc $(CFLAGS) -c src/worker.c -lpthread
+	gcc $(CFLAGS) -c src/dispatcher.c -lpthread
+	gcc $(CFLAGS) -c src/collector.c -lpthread
+	gcc $(CFLAGS) -c src/gestione_segnali.c -lpthread	
+	gcc $(CFLAGS) -c src/wator_main_thread.c -lpthread
+	gcc $(CFLAGS) -c src/wator_thread_funzioni.c -lpthread
 	gcc $(CFLAGS) wator.o valutazione_argomenti.o worker.o dispatcher.o collector.o gestione_segnali.o wator_main_thread.o wator_thread_funzioni.o -o wator -lpthread
 	
 install:
