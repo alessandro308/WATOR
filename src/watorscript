@@ -1,0 +1,148 @@
+#!/bin/bash
+#
+# \file watorscript
+# \author Giuseppe Verdi
+#  Si dichiara che il contenuto di questo file e' in ogni sua parte opera
+#  originale dell' autore. 
+
+#Controllo che siano passati correttamente i parametri
+if [ $# -le 0  -o  $# -gt 2 ];
+then
+	echo Err: Sono passati $# argomenti.>/dev/stderr
+	exit 1
+fi
+
+function fish_count {
+	if ! [ -a $FILE ];then
+		echo Bad File Argument FISH >/dev/stderr
+		exit 1
+	fi
+	exec 4<$FILE
+	count=0
+	while read -u 4 LINE
+	do
+		for char in $LINE
+			do
+				if [ $char = 'F' ];
+				then
+					count=$((count+1))
+				fi
+			done
+	done
+	exec 4>&-
+}
+
+function shark_count {
+        if ! [ -a $FILE ];then
+                echo Bad File Argument SHARK >/dev/stderr
+                exit 1
+        fi
+        exec 4<$FILE
+        count=0
+        while read -u 4 LINE;
+        do
+                for char in $LINE
+                        do      
+                                if [ $char = 'S' ];
+                                then    
+                                        count=$((count+1))
+                                fi
+                        done
+        done
+	exec 4>&-
+}
+
+#Valuto Opzioni
+GET_OPTS=$( getopt -n "$0" -o fs -l "help" -- "$@" )
+eval set -- "$GET_OPTS"
+while true;
+do
+	case $1 in
+		-f) 	 
+			if [ $# -ne 3 ]; then
+				echo "Manca file da elaborare">/dev/stderr
+				exit 1
+			fi
+			FILE=$3
+			#Controllo che il file esista
+			if [ -a $FILE ]; then 
+				fish_count
+				echo $count
+				exit 0
+			else
+				echo File inesistente >/dev/stderr
+				exit 1
+			fi
+			;;
+		-s)
+			if [ $# -ne 3 ]; then
+				echo "Manca file da elaborare">/dev/stderr
+				exit 1
+			fi
+			FILE=$3
+			if [ -a $FILE ]; then
+				shark_count
+				echo $count
+				exit 0
+			else
+				echo File inesistente >/dev/stderr
+				exit 1
+			fi
+			;;
+		--help)
+			echo script F [-s -f] >/dev/stderr
+			echo "Il file verifica la corretta formattazione del file F" >/dev/stderr
+			echo "Inserendo l'opzione -s conta le occorrenze di squali nel pianeta" >/dev/stderr
+			echo "Inserendo l'opzione -f conta le occorrenze di pesci nel pianeta" >/dev/stderr
+			shift
+			exit 1
+			;;
+		--)
+			FILE=$2
+			if [ "$FILE" != "" ]; then 
+				exec 4<$FILE
+			else
+				exit 1
+			fi
+			#Leggo numero colonne
+			read -u 4 LINE
+			if [[ $LINE =~ ^[0-9]+$ ]]; then
+				nrow=$LINE
+			else
+				echo NO >/dev/stderr
+				exit 1
+			fi
+			#Leggo numero righe
+			read -u 4 LINE
+			if [[ $LINE =~ ^[0-9]+$ ]]; then
+				ncol=$LINE
+			else
+				echo NO >/dev/stderr
+				exit 1
+			fi
+			
+			let "nspazi=$ncol-1"
+			#Controllo Pianeta
+			while read -u 4 LINE;
+			do
+				let "nrow=$nrow-1"
+				if [[ $LINE =~ ^([WFS] ){$nspazi}[WFS]$ ]];then
+					continue
+				else
+					exec 4>&-
+					echo NO
+					exit 1
+				fi
+			done
+			exec 4>&-
+			if [ $nrow -eq 0 ]; then
+				echo OK >/dev/stderr
+				exit 0
+			else
+				echo NO >/dev/stderr
+				exit 1
+			fi
+			break
+			;;
+	esac
+done
