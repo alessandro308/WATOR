@@ -9,6 +9,6 @@ fb - Tempo dopo il quale un pesce si riproduce
 
 ###Installazione
 Per l'installazione basta invocare il comando 
-'''
-make install
-'''
+```
+make install 
+```
