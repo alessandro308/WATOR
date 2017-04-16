@@ -1,4 +1,4 @@
-#WATOR - Simulatore Biologico
+# WATOR - Simulatore Biologico
 Implementazione a cura di Alessandro Pagiaro - Progetto realizzato per il corso di Sistemi Operativi
 
 Per la configurazione settare i parametri del file wator.conf
@@ -9,7 +9,7 @@ sb - Tempo dopo il quale uno squalo si riproduce
 
 fb - Tempo dopo il quale un pesce si riproduce
 
-###Installazione
+### Installazione
 Per l'installazione basta invocare il comando 
 ```
 make install 
